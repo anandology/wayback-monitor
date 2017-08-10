@@ -20,7 +20,7 @@ def _resolve_ip(ip):
     return {
         "asn": d['asn'],
         "asn_cidr": d['asn_cidr'],
-        "asn_decription": d['asn_description'],
+        "asn_description": d['asn_description'],
         "asn_country_code": d['asn_country_code'],
         "data": d
     }
@@ -30,10 +30,10 @@ def record_visit(ip, user_agent, http, https):
         return
 
     d = _resolve_ip(ip)
-    d['ip'] = ip
+    d['ip_address'] = ip
     d['user_agent'] = user_agent
-    d['http'] = http
-    d['https'] = https
+    d['http_working'] = http
+    d['https_working'] = https
     db.insert("visit", **d)
 
 class index:
@@ -42,13 +42,17 @@ class index:
 
 class monitor:
     def GET(self):
-        ip = web.ctx.ip
+        #ip = web.ctx.ip
+	ip = web.ctx.env.get('HTTP_X_FORWARDED_FOR') or web.ctx.ip
         user_agent = web.ctx.env['HTTP_USER_AGENT']
         i = web.input(http=None, https=None)
         tf = "true", "false"
         if i.http in tf and i.https in tf:
             record_visit(ip, user_agent, i.http == 'true', i.https == 'true')
-        return ""
+	else:
+	    print >> web.debug, "bad request to monitor", i
+	web.header("Content-type", "application/json")
+        return "{}"
 
 class status:
     def GET(self):

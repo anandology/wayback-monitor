@@ -21,7 +21,7 @@
           return;
 
         var params = {"http": http_status, "https": https_status}
-        \$.get("/monitor?" + \$.param(params));
+        \$.getJSON("/monitor?" + \$.param(params));
        }
 
        function monitor_http(value) {
