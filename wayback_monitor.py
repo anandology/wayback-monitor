@@ -1,6 +1,7 @@
 import web
 import os
 from ipwhois import IPWhois
+import json
 
 urls = (
     "/", "index",
@@ -22,7 +23,7 @@ def _resolve_ip(ip):
         "asn_cidr": d['asn_cidr'],
         "asn_description": d['asn_description'],
         "asn_country_code": d['asn_country_code'],
-        "data": d
+        "data": json.dumps(d)
     }
 
 def record_visit(ip, user_agent, http, https):
