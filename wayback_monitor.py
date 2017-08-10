@@ -2,6 +2,7 @@ import web
 import os
 from ipwhois import IPWhois
 import json
+import time
 
 urls = (
     "/", "index",
@@ -39,7 +40,8 @@ def record_visit(ip, user_agent, http, https):
 
 class index:
     def GET(self):
-        return render.index()
+        t = time.time()
+        return render.index(t=t)
 
 class monitor:
     def GET(self):
