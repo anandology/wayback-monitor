@@ -9,11 +9,11 @@ urls = (
 )
 
 app = web.application(urls, globals())
+application = app.wsgifunc()
+
 render = web.template.render("templates/")
-
 db_url = os.getenv("DATABASE_URL") or "postgres:///wayback-monitor"
-
-
+db = web.database(db_url)
 
 def _resolve_ip(ip):
     d = IPWhois(ip).lookup_rdap()
