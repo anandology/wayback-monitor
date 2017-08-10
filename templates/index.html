@@ -1,105 +1,30 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' /><![endif]-->
+$def with ()
+<h1>Wayback Monitor</h1>
 
-    <meta name="description" content="Tool to monitor the access to the wayback machine."/>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Wayback Monitor</title>
+<p>
+<a class="btn btn-primary" href="/status">Status</a>
+</p>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    
+<div id="message1" class="alert">
+  Checking wayback machine on HTTP...
+</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<br/>
 
-    <script type="text/javascript">
-       var http_status = null;
-       var https_status = null;
+<div id="message2" class="alert">
+  Checking wayback machine on HTTPS...
+</div>
 
-       function monitor_status() {
-        if (http_status == null || https_status == null)
-          return;
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
-        var params = {"http": http_status, "https": https_status}
-        \$.getJSON("/monitor?" + \$.param(params));
-       }
-
-       function monitor_http(value) {
-        http_status = value;
-        monitor_status();
-       }
-       function monitor_https(value) {
-        https_status = value;
-        monitor_status();
-       }
-
-       \$(function() {
-        \$("#wb1")
-          .bind("load", function() {
-            \$("#message1")
-              .text("Wayback on HTTP is working")
-              .removeClass("alert-danger")
-              .addClass("alert-success")
-              ;
-              monitor_http('true');
-          })
-          .bind("error", function() {
-            \$("#message1")
-              .text("Wayback on HTTP is blocked")
-              .removeClass("alert-success")
-              .addClass("alert-danger")
-              ;
-              monitor_http('false');
-          });
-
-        \$("#wb2")
-          .bind("load", function() {
-            \$("#message2")
-              .text("Wayback on HTTPS is working")
-              .removeClass("alert-danger")
-              .addClass("alert-success")
-              ;
-              monitor_https('true');
-          })
-          .bind("error", function() {
-            \$("#message2")
-              .text("Wayback on HTTPS is blocked")
-              .removeClass("alert-success")
-              .addClass("alert-danger")
-              ;
-              monitor_https('false');
-          });
-
-     });
-    </script>
-</head>
-<body>
-  <div class="container">
-    <h1>Wayback Monitor</h1>
-
-    <div id="message1" class="alert">
-      Checking wayback machine on HTTP...
-    </div>
-
-    <br/>
-
-    <div id="message2" class="alert">
-      Checking wayback machine on HTTPS...
-    </div>
-
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-
-    <img id="wb1" src="http://web.archive.org/static/images/logo_archive-sm.png"/>
-    <img id="wb2" src="https://web.archive.org/static/images/logo_archive-sm.png"/>
-  </div>
-</body>
-</html>
+<img id="wb1" src="http://web.archive.org/static/images/logo_archive-sm.png"/>
+<img id="wb2" src="https://web.archive.org/static/images/logo_archive-sm.png"/>
 

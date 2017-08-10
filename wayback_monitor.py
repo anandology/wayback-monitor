@@ -12,7 +12,7 @@ urls = (
 app = web.application(urls, globals())
 application = app.wsgifunc()
 
-render = web.template.render("templates/")
+render = web.template.render("templates/", base="base")
 db_url = os.getenv("DATABASE_URL") or "postgres:///wayback-monitor"
 db = web.database(db_url)
 
@@ -57,7 +57,9 @@ class monitor:
 
 class status:
     def GET(self):
-        return render.status()
+        what = "asn_description, asn_country_code, http_working, https_working"
+        visits = db.select("visit", what=what, order="id desc", limit=500)
+        return render.status(visits)
 
 if __name__ == "__main__":
     app.run()

@@ -1,0 +1,25 @@
+$def with (visits)
+<h1>Wayback Monitor - Status</h1>
+
+<table class="table">
+  <tr>
+    <th>ISP Name</th>
+    <th>Country</th>
+    <th>HTTP</th>
+    <th>HTTPS</th>    
+  </tr>
+
+$def show_flag(value):
+    $if value:
+        <span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+    $else:
+        <span class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+
+$for v in visits:
+    <tr>
+        <td>$v.asn_description</td>
+        <td>$v.asn_country_code</td>
+        <td>$:show_flag(v.http_working)</td>
+        <td>$:show_flag(v.https_working)</td>
+    </tr>
+</table>
