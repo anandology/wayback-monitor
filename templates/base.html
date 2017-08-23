@@ -14,64 +14,52 @@ $def with (page)
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-       var http_status = null;
-       var https_status = null;
+       var flags = {
+          http_ia: null,
+          https_ia: null,
+          http_wb: null,
+          https_wb: null
+      }
 
-       function monitor_status() {
-        if (http_status == null || https_status == null)
-          return;
+      function monitor(flag, value) {
+        flags[flag] = value;
 
-        var params = {"http": http_status, "https": https_status}
-        \$.getJSON("/monitor?" + \$.param(params));
-       }
+        console.log([flag, value, flags]);
+        // return if any of the flag is not set
+        for (var flag in flags) {
+          if (flags[flag] == null)
+            return;
+        }
 
-       function monitor_http(value) {
-        http_status = value;
-        monitor_status();
-       }
-       function monitor_https(value) {
-        https_status = value;
-        monitor_status();
-       }
+        \$.getJSON("/monitor?" + \$.param(flags));
+      }
 
-       \$(function() {
-        \$("#wb1")
+      function setup_check(name, label, image_id, div_id) {
+        \$(image_id)
           .bind("load", function() {
-            \$("#message1")
-              .text("Wayback on HTTP is working")
+            \$(div_id)
+              .text(label + " is working")
               .removeClass("alert-danger")
               .addClass("alert-success")
               ;
-              monitor_http('true');
+              monitor(name, 'true');
           })
           .bind("error", function() {
-            \$("#message1")
-              .text("Wayback on HTTP is blocked")
+            \$(div_id)
+              .text(label + " is blocked")
               .removeClass("alert-success")
               .addClass("alert-danger")
               ;
-              monitor_http('false');
+              monitor(name, 'false');
           });
+      }
 
-        \$("#wb2")
-          .bind("load", function() {
-            \$("#message2")
-              .text("Wayback on HTTPS is working")
-              .removeClass("alert-danger")
-              .addClass("alert-success")
-              ;
-              monitor_https('true');
-          })
-          .bind("error", function() {
-            \$("#message2")
-              .text("Wayback on HTTPS is blocked")
-              .removeClass("alert-success")
-              .addClass("alert-danger")
-              ;
-              monitor_https('false');
-          });
-
-     });
+      \$(function() {
+        setup_check("http_ia", "archive.org on HTTP", "#ia-http", "#ia-http-message");
+        setup_check("https_ia", "archive.org on HTTPS", "#ia-https", "#ia-https-message");
+        setup_check("http_wb", "Wayback Machine on HTTP", "#wb-http", "#wb-http-message");
+        setup_check("https_wb", "Wayback Machine on HTTPS", "#wb-https", "#wb-https-message");
+      });
     </script>
 </head>
 <body>

@@ -5,14 +5,24 @@ $def with (t)
 <a class="btn btn-primary" href="/status">Status</a>
 </p>
 
-<div id="message1" class="alert">
+<div id="wb-http-message" class="alert">
   Checking wayback machine on HTTP...
 </div>
 
 <br/>
 
-<div id="message2" class="alert">
+<div id="wb-https-message" class="alert">
   Checking wayback machine on HTTPS...
+</div>
+
+<div id="ia-http-message" class="alert">
+  Checking archive.org on HTTP...
+</div>
+
+<br/>
+
+<div id="ia-https-message" class="alert">
+  Checking archive.org on HTTPS...
 </div>
 
 <br/>
@@ -25,6 +35,8 @@ $def with (t)
 <br/>
 <br/>
 
-<img id="wb1" src="http://web.archive.org/static/images/logo_archive-sm.png?t=$t"/>
-<img id="wb2" src="https://web.archive.org/static/images/logo_archive-sm.png?t=$t"/>
+<img id="wb-http" src="http://web.archive.org/static/images/logo_archive-sm.png?t=$t"/>
+<img id="wb-https" src="https://web.archive.org/static/images/logo_archive-sm.png?t=$t"/>
 
+<img id="ia-http" src="http://archive.org/images/glogo.jpg?t=$t"/>
+<img id="ia-https" src="https://archive.org/images/glogo.jpg?t=$t"/>
