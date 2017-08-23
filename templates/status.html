@@ -10,8 +10,10 @@ $def with (visits)
     <th>When</th>
     <th>ISP Name</th>
     <th>Country</th>
-    <th>HTTP</th>
-    <th>HTTPS</th>    
+    <th>Wayback HTTP</th>
+    <th>Wayback HTTPS</th>
+    <th>IA HTTP</th>
+    <th>IA HTTPS</th>
   </tr>
 
 $def show_flag(value):
@@ -25,7 +27,9 @@ $for v in visits:
         <td>$datestr(v.created)</td>
         <td>$v.asn_description</td>
         <td>$v.asn_country_code</td>
-        <td>$:show_flag(v.http_working)</td>
-        <td>$:show_flag(v.https_working)</td>
+        <td>$:show_flag(v.http_wb)</td>
+        <td>$:show_flag(v.https_wb)</td>
+        <td>$:show_flag(v.http_ia)</td>
+        <td>$:show_flag(v.https_ia)</td>
     </tr>
 </table>
