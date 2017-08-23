@@ -24,7 +24,6 @@ $def with (page)
       function monitor(flag, value) {
         flags[flag] = value;
 
-        console.log([flag, value, flags]);
         // return if any of the flag is not set
         for (var flag in flags) {
           if (flags[flag] == null)
