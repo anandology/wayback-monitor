@@ -17,7 +17,9 @@ $def with (visits)
   </tr>
 
 $def show_flag(value):
-    $if value:
+    $if value is None:
+        <span></span>
+    $elif value:
         <span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
     $else:
         <span class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
